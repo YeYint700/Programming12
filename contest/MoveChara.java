@@ -6,6 +6,8 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 public class MoveChara {
     public static final int TYPE_DOWN = 0;
@@ -29,11 +31,17 @@ public class MoveChara {
 
     private MapData mapData;
 
+
     private Image[][] charaImages;
     private ImageView[] charaImageViews;
     private ImageAnimation[] charaImageAnimations;
 
     private int charaDirection;
+
+    private MediaPlayer WalkingSound;
+    private MediaPlayer BumpSound;
+    WalkingSound = new MediaPlayer(new Media(new File("sound/WalkingSE01.mp3").toURI().toString()));
+    BumpSound = new MediaPlayer(new Media(new File("sound/BumpSE01.mp3").toURI().toString()));
 
     MoveChara(int startX, int startY, MapData mapData) {
         this.mapData = mapData;
@@ -152,8 +160,10 @@ public class MoveChara {
             posX += dx;
             posY += dy;
 	    System.out.println("chara[X,Y]:" + posX + "," + posY);
+            WalkingSound.play();
             return true;
         } else {
+            BumpSound.play();
             return false;
         }
     }
