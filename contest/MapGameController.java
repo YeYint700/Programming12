@@ -1,5 +1,9 @@
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javafx.fxml.Initializable;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
@@ -11,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
+import javafx.scene.layout.StackPane;
 
 public class MapGameController implements Initializable {
     public MapData mapData;
@@ -27,6 +32,16 @@ public class MapGameController implements Initializable {
     private javafx.animation.Timeline timer;
     private int remainingSeconds = 30;
 
+    private GameItem.GameContext gameCtx;
+    private final Map<String, GameItem> itemByPos = new HashMap<>();
+    private final List<GameItem> items = new ArrayList<>();
+
+    @FXML
+    private Label speedLabel;
+
+    @FXML
+    private ImageView keyInventory;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         mapData = new MapData(21, 15);
@@ -38,10 +53,40 @@ public class MapGameController implements Initializable {
                 mapImageViews[index] = mapData.getImageView(x, y);
             }
         }
+        gameCtx = new GameItem.GameContext();
+        gameCtx.speedBoostLabel=speedLabel;
+        gameCtx.keyInventoryIcon=keyInventory;
+
+        if(gameCtx.speedBoostLabel !=null)
+        gameCtx.speedBoostLabel.setVisible(false);
+        if(gameCtx.keyInventoryIcon !=null)
+        gameCtx.keyInventoryIcon.setVisible(false);
+
+        setupItems();
+
         drawMap(chara, mapData);
 
         // timer starts.
         startTimer();
+
+        mapGrid.setFocusTraversable(true);
+        mapGrid.requestFocus();
+        mapGrid.setOnKeyPressed(this::keyAction);
+    }
+    private String posKey(int x, int y){
+        return x + "_"+ y;
+    }
+
+    private void setupItems(){
+        //必要に応じて座標を調整
+        placeItem(new GameItem(3,3,GameItem.ItemType.SPEEDBOOSTER));
+        placeItem(new GameItem(10, 5, GameItem.ItemType.SPEEDBOOSTER));
+        placeItem(new GameItem(15, 12, GameItem.ItemType.KEY));
+    }
+
+    private void placeItem(GameItem item){
+        items.add(item);
+        itemByPos.put(item.posKey(),item);    
     }
 
     // Draw the map
@@ -52,12 +97,79 @@ public class MapGameController implements Initializable {
         for (int y = 0; y < mapData.getHeight(); y ++) {
             for (int x = 0; x < mapData.getWidth(); x ++) {
                 int index = y * mapData.getWidth() + x;
+                StackPane cell = new StackPane();
+                cell.getChildren().add(mapImageViews[index]);
+                GameItem item = itemByPos.get(posKey(x,y));
+                if(item !=null && !item.isPicked()){
+                    cell.getChildren().add(item.getImageView());
+                }
                 if (x == cx && y == cy) {
                     mapGrid.add(c.getCharaImageView(), x, y);
                 } else {
-                    mapGrid.add(mapImageViews[index], x, y);
+                    mapGrid.add(cell, x, y);
                 }
             }
+        }
+    }
+
+    private void afterMove(){
+        pickupIfAny();
+        drawMap(chara,mapData);
+    }
+
+    private void pickupIfAny(){
+        int x = chara.getPosX();
+        int y = chara.getPosY();
+
+        GameItem item = itemByPos.get(posKey(x,y));
+        if(item == null || item.isPicked())
+            return;
+        item.applyEffect(gameCtx);
+        itemByPos.remove(item.posKey());
+    }
+
+    private void moveWithSpeed(int dx,int dy){
+        int steps = Math.max(1,gameCtx.speedMultiplier);
+        for(int i =0; i<steps; i++){
+            boolean can = chara.move(dx,dy);
+            pickupIfAny();
+            checkDoor(chara.getPosX(),chara.getPosY());
+        }
+        drawMap(chara, mapData);
+    }
+
+    private void checkDoor(int x,int y){
+        if(!isDoorTile(x,y))
+            return;
+        boolean opened = GameItem.tryUseKey(gameCtx);
+        if(opened){
+            openDoorAt(x,y);
+            drawMap(chara, mapData);
+        }
+    }
+
+    private boolean isDoorTile(int x, int y){
+        return mapData.isDoor(x,y);
+    }
+
+    private void openDoorAt(int x,int y){
+        mapData.openDoor(x,y);
+    }
+
+    private void onGameOver(){
+        try{
+            if(gameCtx != null && gameCtx.speedBoostTimeline != null){
+                gameCtx.speedBoostTimeline.stop();
+                gameCtx.speedBoostTimeline=null;
+            }
+            if(timer != null){
+                timer.stop();
+            }
+            StageDB.getMainStage().hide();
+            StageDB.getMainSound().stop();
+            StageDB.getGameOverStage().show();
+        }catch(Exception ex){
+            System.out.println(ex.getMessage());
         }
     }
 
@@ -173,6 +285,13 @@ public class MapGameController implements Initializable {
     private void onTimeUp(){
         try {
             System.out.println("Time Over");
+            if(gameCtx != null && gameCtx.speedBoostTimeline !=null){
+                gameCtx.speedBoostTimeline.stop();
+                gameCtx.speedBoostTimeline = null;
+                gameCtx.speedMultiplier =1;
+                if(speedLabel != null)
+                    speedLabel.setVisible(false);
+            }
             StageDB.getMainStage().hide();
             StageDB.getMainSound().stop();
             StageDB.getGameOverStage().show();
