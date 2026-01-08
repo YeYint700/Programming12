@@ -7,7 +7,8 @@ public class MapData {
     public static final int TYPE_OTHERS = 2;
     private static final String mapImageFiles[] = {
             "png/SPACE.png",
-            "png/WALL.png"
+            "png/WALL.png",
+            "png/door.png"
     };
 
     private Image[] mapImages;
@@ -17,9 +18,9 @@ public class MapData {
     private int height; // height of the map
 
     MapData(int x, int y) {
-        mapImages = new Image[2];
+        mapImages = new Image[mapImageFiles.length];
         mapImageViews = new ImageView[y][x];
-        for (int i = 0; i < 2; i ++) {
+        for (int i = 0; i < mapImageFiles.length; i ++) {
             mapImages[i] = new Image(mapImageFiles[i]);
         }
 
@@ -97,4 +98,12 @@ public class MapData {
     public int getWidth() {
         return width;
     }
+
+    public boolean isDoor(int x, int y){
+        return getMap(x,y) == TYPE_DOOR;
+    }
+
+    public void openDoor(int x,int y){
+        setMap(x,y,TYPE_SPACE);
+    } 
 }
