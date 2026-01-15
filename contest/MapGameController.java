@@ -84,17 +84,30 @@ public class MapGameController implements Initializable {
         placeItem(new GameItem(15, 12, GameItem.ItemType.KEY));
     }
 
-    private void placeItem(GameItem item){
-        String key = item.posKey();
+    private void placeItemRandomly(GameItem item){
+        List<String> emptyKeys = new ArrayList<>();
+        for (int y = 0; y < mapData.getHeight(); y++) {
+            for (int x = 0; x < mapData.getWidth(); x++) {
+                String key = x + "_" + y;
+                if (!itemByPos.containsKey(key) && mapData.isEnterable(x, y)) {
+                    emptyKeys.add(key);
+                }
+            }
+        }
 
-   　　 // すでに同じ場所にアイテムがある場合は置かない
-    　　if (itemByPos.containsKey(key)) {
-        　　System.out.println("Item already exists at " + key);
-        　　return;
-    　　}
+        if (emptyKeys.isEmpty()) {
+            System.out.println("No empty space to place item");
+            return;
+        }
 
-    　　items.add(item);
-    　　itemByPos.put(key, item); 
+        int idx = (int)(Math.random() * emptyKeys.size());
+        String key = emptyKeys.get(idx);
+        int x = Integer.parseInt(key.split("_")[0]);
+        int y = Integer.parseInt(key.split("_")[1]);
+
+        item.setPos(x, y);
+        items.add(item);
+        itemByPos.put(key, item);
     }
 
     // Draw the map
