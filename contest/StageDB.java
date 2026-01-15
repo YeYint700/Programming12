@@ -45,7 +45,7 @@ class StageDB {
                 // please write down the code for playing gameover sound
                 Media m = new Media(new File(gameOverSoundFileName).toURI().toString());
                 MediaPlayer mp = new MediaPlayer(m);
-                mp.setCycleCount(MediaPlayer.INDEFINITE); // loop play
+                mp.setCycleCount(1); // play only once
                 mp.setRate(1.0); // 1.0 = normal speed
                 mp.setVolume(0.5); // volume from 0.0 to 1.0
                 gameOverSound = mp;
@@ -91,6 +91,13 @@ class StageDB {
         if (mainStage != null){
             mainStage.close();
             mainStage=null;
+        }
+    }
+
+    public static void resetGameOverSound(){
+        if (gameOverSound != null){
+            gameOverSound.stop();
+            gameOverSound=null;
         }
     }
 }

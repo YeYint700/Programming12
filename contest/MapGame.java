@@ -8,6 +8,7 @@ public class MapGame extends Application {
   public void start(Stage primaryStage) throws Exception {
     stage = primaryStage;
     stage.hide();
+    StageDB.getGameOverSound().stop();
     StageDB.setMainClass(getClass());
     StageDB.getMainStage().show();
     StageDB.getMainSound().play();

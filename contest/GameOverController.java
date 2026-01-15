@@ -8,7 +8,7 @@ public class GameOverController {
   try {
    StageDB.getGameOverStage().hide();
    StageDB.getMainSound().stop();
-   
+   StageDB.getGameOverSound().stop();
    StageDB.resetMainStage();
    StageDB.getMainStage().show();
    StageDB.getMainStage().setHeight(600);  // ゲーム画面復帰時に明示的にサイズ変更
