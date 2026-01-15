@@ -43,6 +43,11 @@ public class MoveChara {
     private AudioClip WalkingSound;
     private AudioClip BumpSound;
 
+	public ImageAnimation getCharaImageAnimation(int direction) {
+        if (direction < 0 || direction >= 4) return null;
+        return charaImageAnimations[direction];
+    }
+
     MoveChara(int startX, int startY, MapData mapData) {
 
         WalkingSound = new AudioClip(new File("sound/WalkingSE02.mp3").toURI().toString());
@@ -149,8 +154,8 @@ public class MoveChara {
     }
 
     private boolean isMovable(int dx, int dy) {
-    　　return mapData.isEnterable(posX + dx, posY + dy);
-　　}
+        return mapData.isEnterable(posX + dx, posY + dy);
+    }
 
     // move the cat
     public boolean move(int dx, int dy) {
