@@ -86,6 +86,24 @@ class StageDB {
         }
         return gameOverStage;
     }
+  
+    public static Stage getGameClearStage() {
+        if (gameClearStage == null) {
+            try {
+               System.out.println("StageDB:getGameClearStage()");
+                FXMLLoader loader = new FXMLLoader(
+                    mainClass.getResource("MapGameClear.fxml")
+                );
+                VBox root = loader.load();
+                Scene scene = new Scene(root);
+                gameClearStage = new Stage();
+                gameClearStage.setScene(scene);
+            } catch (IOException ioe) {
+                System.err.println(ioe);
+            }
+        }
+        return gameClearStage;
+    }
 
     
 
