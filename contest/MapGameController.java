@@ -171,9 +171,8 @@ public class MapGameController implements Initializable {
         int x = chara.getPosX();
         int y = chara.getPosY();
 
-        if(x == mapData.getGoalX() && y == mapData.getGoalY()
-            && mapData.getMap(x,y) == MapData.TYPE_SPACE){
-            onGameClear();
+        if (x == mapData.getGoalX() && y == mapData.getGoalY()) {
+        onGameClear();
         }
     }
 
