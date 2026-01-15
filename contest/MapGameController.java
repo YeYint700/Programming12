@@ -265,7 +265,35 @@ public class MapGameController implements Initializable {
 
     @FXML
     public void func2ButtonAction(ActionEvent event) {
-        System.out.println("func2: Nothing to do");
+        System.out.println("func2: 新マップ生成中");
+        
+        if (timer != null) {
+            timer.stop();
+        }
+
+        // 新しいマップデータ作成
+        mapData = new MapData(21, 15);
+
+        // キャラクターを初期位置に戻す
+        chara = new MoveChara(1, 1, mapData);
+
+        // アイテムをリセットして配置
+        items.clear();
+        itemByPos.clear();
+        setupItems();
+
+        // ゲームコンテキストのリセット
+        gameCtx.speedMultiplier = 1;
+        if(gameCtx.speedBoostLabel != null)
+            gameCtx.speedBoostLabel.setVisible(false);
+        if(gameCtx.keyInventoryIcon != null)
+            gameCtx.keyInventoryIcon.setVisible(false);
+
+        // マップ描画
+        drawMap(chara, mapData);
+
+        // タイマー再スタート
+        startTimer();
     }
 
     @FXML
