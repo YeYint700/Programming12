@@ -94,10 +94,4 @@ class StageDB {
         }
     }
 
-    public static void resetGameOverSound(){
-        if (gameOverSound != null){
-            gameOverSound.stop();
-            gameOverSound=null;
-        }
-    }
-}
+    
