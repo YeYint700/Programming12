@@ -16,6 +16,8 @@ public class MapData {
     private int[][] maps;
     private int width; // width of the map
     private int height; // height of the map
+    private int goalX;
+    private int goalY;//ゴールを追加
 
     MapData(int x, int y) {
         mapImages = new Image[mapImageFiles.length];
@@ -30,6 +32,7 @@ public class MapData {
 
         fillMap(MapData.TYPE_WALL);
         digMap(1, 3);
+        setFarthestGoal(1,1); // BFSで最遠ゴール
         setImageViews();
     }
 
@@ -106,4 +109,16 @@ public class MapData {
     public void openDoor(int x,int y){
         setMap(x,y,TYPE_SPACE);
     } 
+
+    public int getGoalX() {
+        return goalX;
+    }
+
+    public int getGoalY() {
+        return goalY;
+    }
+    public void setGoal(int x, int y){
+        goalX = x;
+        goalY = y;
+        maps[y][x] = TYPE_DOOR; // ゴールをドア扱いにする
 }
