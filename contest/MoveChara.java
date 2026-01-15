@@ -164,11 +164,9 @@ public class MoveChara {
             posX += dx;
             posY += dy;
 	    System.out.println("chara[X,Y]:" + posX + "," + posY);
-            WalkingSound.stop();
             WalkingSound.play();
             return true;
         } else {
-            BumpSound.stop();
             BumpSound.play();
             return false;
         }
