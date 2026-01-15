@@ -223,7 +223,7 @@ public class MapGameController implements Initializable {
         printAction("UP");
         chara.setCharaDirection(MoveChara.TYPE_UP);
         chara.move(0, -1);
-        drawMap(chara, mapData);
+        afterMove();
     }
 
     // Operations for going the cat down
@@ -231,7 +231,7 @@ public class MapGameController implements Initializable {
         printAction("DOWN");
         chara.setCharaDirection(MoveChara.TYPE_DOWN);
         chara.move(0, 1);
-        drawMap(chara, mapData);
+        afterMove();
     }
 
     // Operations for going the cat right
@@ -239,7 +239,7 @@ public class MapGameController implements Initializable {
         printAction("LEFT");
         chara.setCharaDirection(MoveChara.TYPE_LEFT);
         chara.move(-1, 0);
-        drawMap(chara, mapData);
+        afterMove();
     }
 
     // Operations for going the cat right
@@ -247,7 +247,7 @@ public class MapGameController implements Initializable {
         printAction("RIGHT");
         chara.setCharaDirection(MoveChara.TYPE_RIGHT);
         chara.move(1, 0);
-        drawMap(chara, mapData);
+        afterMove();
     }
 
     @FXML
