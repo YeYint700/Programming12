@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml/1"
+      spacing="20"
+      alignment="CENTER"
+      prefWidth="400"
+      prefHeight="300">
+
+    <Label text="GAME CLEAR!"
+           style="-fx-font-size: 36px; -fx-font-weight: bold;" />
+
+    <Button text="Retry"
+            onAction="#onRetry"
+            prefWidth="200"/>
+
+    <Button text="Exit"
+            onAction="#onExit"
+            prefWidth="200"/>
+
+</VBox>
