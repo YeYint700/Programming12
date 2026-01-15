@@ -148,15 +148,9 @@ public class MoveChara {
         }
     }
 
-    // check whether the cat can move on
     private boolean isMovable(int dx, int dy) {
-        if (mapData.getMap(posX + dx, posY + dy) == MapData.TYPE_WALL) {
-            return false;
-        } else if (mapData.getMap(posX + dx, posY + dy) == MapData.TYPE_SPACE) {
-            return true;
-        }
-        return false;
-    }
+    　　return mapData.isEnterable(posX + dx, posY + dy);
+　　}
 
     // move the cat
     public boolean move(int dx, int dy) {
