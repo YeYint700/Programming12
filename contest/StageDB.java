@@ -87,11 +87,6 @@ class StageDB {
         return gameOverStage;
     }
 
-    public static void resetMainStage(){
-        if (mainStage != null){
-            mainStage.close();
-            mainStage=null;
-        }
-    }
+    
 
     
