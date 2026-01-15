@@ -1,5 +1,7 @@
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import java.util.ArrayDeque;
+import java.util.Queue;
 
 public class MapData {
     public static final int TYPE_SPACE = 0;
@@ -32,7 +34,7 @@ public class MapData {
 
         fillMap(MapData.TYPE_WALL);
         digMap(1, 3);
-        setFarthestGoal(1,1); // BFSで最遠ゴール
+        setFarthestGoal(1,1); // 最遠ゴール
         setImageViews();
     }
 
@@ -66,6 +68,51 @@ public class MapData {
                 digMap(x + dx * 2, y + dy * 2);
             }
         }
+    }
+
+    private void setFarthestGoal(int startX, int startY) {
+        int[][] dist = new int[height][width];
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                dist[y][x] = -1;
+            }
+        }
+
+        Queue<int[]> q = new ArrayDeque<>();
+        q.add(new int[]{startX, startY});
+        dist[startY][startX] = 0;
+
+        int[][] dir = {{1,0},{-1,0},{0,1},{0,-1}};
+
+        int maxDist = 0;
+        goalX = startX;
+        goalY = startY;
+
+        while (!q.isEmpty()) {
+            int[] p = q.poll();
+            int x = p[0];
+            int y = p[1];
+
+            for (int[] d : dir) {
+                int nx = x + d[0];
+                int ny = y + d[1];
+
+                if (getMap(nx, ny) == TYPE_SPACE && dist[ny][nx] == -1) {
+                    dist[ny][nx] = dist[y][x] + 1;
+                    q.add(new int[]{nx, ny});
+
+                    if (dist[ny][nx] > maxDist) {
+                        maxDist = dist[ny][nx];
+                        goalX = nx;
+                        goalY = ny;
+                    }
+                }
+            }
+        }
+
+        // ゴールをドアにする
+        maps[goalY][goalX] = TYPE_DOOR;
     }
 
     public int getMap(int x, int y) {
