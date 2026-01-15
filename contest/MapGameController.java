@@ -207,13 +207,13 @@ public class MapGameController implements Initializable {
     public void keyAction(KeyEvent event) {
         KeyCode key = event.getCode();
         System.out.println("keycode:" + key);
-        if (key == KeyCode.H) {
+        if (key == KeyCode.A) {
             leftButtonAction();
-        } else if (key == KeyCode.J) {
+        } else if (key == KeyCode.S) {
             downButtonAction();
-        } else if (key == KeyCode.K) {
+        } else if (key == KeyCode.W) {
             upButtonAction();
-        } else if (key == KeyCode.L) {
+        } else if (key == KeyCode.D) {
             rightButtonAction();
         }
     }
