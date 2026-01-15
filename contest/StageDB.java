@@ -104,8 +104,14 @@ class StageDB {
         }
         return gameClearStage;
     }
-     public static void resetMainStage() {
-        mainStage = null;
+    public void resetGame() {
+        chara.setPosition(1, 1);
+        mapData = new MapData(21, 15);
+        items.clear();
+        itemByPos.clear();
+        setupItems();
+        startTimer();
+        drawMap(chara, mapData);
     }
 }
     
