@@ -165,6 +165,25 @@ public class MapGameController implements Initializable {
         }
     }
 
+    private void onGameClear(){
+        try{
+            if(timer != null)
+                timer.stop();
+
+            if(gameCtx != null && gameCtx.speedBoostTimeline != null){
+                gameCtx.speedBoostTimeline.stop();
+            }
+
+            StageDB.getMainStage().hide();
+            StageDB.getMainSound().stop();
+
+            StageDB.getGameClearStage().show();
+
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
     private void onGameOver(){
         try{
             if(gameCtx != null && gameCtx.speedBoostTimeline != null){
