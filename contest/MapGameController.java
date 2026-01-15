@@ -205,8 +205,6 @@ public class MapGameController implements Initializable {
         stopAllTimersAndAnimations();
         
         try{
-            if(timer != null)
-                timer.stop();
 
             if(gameCtx != null && gameCtx.speedBoostTimeline != null){
                 gameCtx.speedBoostTimeline.stop();
