@@ -104,7 +104,10 @@ class StageDB {
         }
         return gameClearStage;
     }
-
+     public static void resetMainStage() {
+        mainStage = null;
+    }
+}
     
 
     
