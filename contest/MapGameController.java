@@ -114,6 +114,7 @@ public class MapGameController implements Initializable {
 
     private void afterMove(){
         pickupIfAny();
+        checkDoor(chara.getPosX(), chara.getPosY());
         checkGoal();
         drawMap(chara,mapData);
     }
@@ -157,10 +158,11 @@ public class MapGameController implements Initializable {
         mapData.openDoor(x,y);
     }
     private void checkGoal(){
-        int cx = chara.getPosX();
-        int cy = chara.getPosY();
+        int x = chara.getPosX();
+        int y = chara.getPosY();
 
-        if(cx == mapData.getGoalX() && cy == mapData.getGoalY()){
+        if(x == mapData.getGoalX() && y == mapData.getGoalY()
+            && mapData.getMap(x,y) == MapData.TYPE_SPACE){
             onGameClear();
         }
     }
