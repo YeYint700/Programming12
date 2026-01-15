@@ -11,6 +11,7 @@ class StageDB {
 
     static private Stage mainStage = null;
     static private Stage gameOverStage = null;
+    static private Stage gameClearStage = null;
     static private MediaPlayer mainSound = null;
     static private MediaPlayer gameOverSound = null;
     @SuppressWarnings("rawtypes")
