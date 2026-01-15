@@ -134,7 +134,7 @@ public class MapGameController implements Initializable {
         String key = posKey(x, y);
         GameItem item = itemByPos.get(key);
         if(item == null) return;
-            return;
+            
         item.applyEffect(gameCtx);
         itemByPos.remove(key);
         items.remove(item);
