@@ -59,7 +59,7 @@ class StageDB {
     public static Stage getMainStage() {
         if (mainStage == null) {
             try {
-                FXMLLoader loader = new FXMLLoader(mainClass.getResource("MapGame.fxml"));
+                FXMLLoader loader = new FXMLLoader(mainClass.getResource("/contest/MapGame.fxml"));
                 VBox root = loader.load();
                 Scene scene = new Scene(root);
                 mainStage = new Stage();
@@ -75,7 +75,7 @@ class StageDB {
         if (gameOverStage == null) {
             try {
                 System.out.println("StageDB:getGameOverStage()");
-                FXMLLoader loader = new FXMLLoader(mainClass.getResource("MapGameOver.fxml"));
+                FXMLLoader loader = new FXMLLoader(mainClass.getResource("/contest/MapGameOver.fxml"));
                 VBox root = loader.load();
                 Scene scene = new Scene(root);
                 gameOverStage = new Stage();
@@ -92,7 +92,7 @@ class StageDB {
             try {
                System.out.println("StageDB:getGameClearStage()");
                 FXMLLoader loader = new FXMLLoader(
-                    mainClass.getResource("MapGameClear.fxml")
+                    mainClass.getResource("/contest/MapGameClear.fxml")
                 );
                 VBox root = loader.load();
                 Scene scene = new Scene(root);
