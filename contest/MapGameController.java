@@ -227,6 +227,7 @@ public class MapGameController implements Initializable {
             StageDB.getMainStage().hide();
             StageDB.getMainSound().stop();
             StageDB.getGameOverStage().show();
+            StageDB.getGameOverSound().play();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -294,6 +295,7 @@ public class MapGameController implements Initializable {
             }
             StageDB.getMainStage().hide();
             StageDB.getMainSound().stop();
+            StageDB.getGameOverSound().play();
             StageDB.getGameOverStage().show();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
