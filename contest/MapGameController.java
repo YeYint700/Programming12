@@ -274,6 +274,15 @@ public class MapGameController implements Initializable {
         // 新しいマップデータ作成
         mapData = new MapData(21, 15);
 
+         // mapImageViews 再初期化
+        mapImageViews = new ImageView[mapData.getHeight() * mapData.getWidth()];
+        for (int y = 0; y < mapData.getHeight(); y++) {
+            for (int x = 0; x < mapData.getWidth(); x++) {
+                int index = y * mapData.getWidth() + x;
+                mapImageViews[index] = mapData.getImageView(x, y);
+            }
+        }
+
         // キャラクターを初期位置に戻す
         chara = new MoveChara(1, 1, mapData);
 
@@ -294,7 +303,11 @@ public class MapGameController implements Initializable {
 
         // タイマー再スタート
         startTimer();
+
+         StageDB.getMainStage().show();
     }
+
+　　}
 
     @FXML
     public void func3ButtonAction(ActionEvent event) {
