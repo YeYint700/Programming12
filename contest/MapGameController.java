@@ -71,7 +71,7 @@ public class MapGameController implements Initializable {
 
         mapGrid.setFocusTraversable(true);
         mapGrid.requestFocus();
-        mapGrid.setOnKeyPressed(this::keyAction);
+        mainStage.setOnShown(e -> mapGrid.requestFocus());
     }
     private String posKey(int x, int y){
         return x + "_"+ y;
@@ -85,8 +85,16 @@ public class MapGameController implements Initializable {
     }
 
     private void placeItem(GameItem item){
-        items.add(item);
-        itemByPos.put(item.posKey(),item);    
+        String key = item.posKey();
+
+   　　 // すでに同じ場所にアイテムがある場合は置かない
+    　　if (itemByPos.containsKey(key)) {
+        　　System.out.println("Item already exists at " + key);
+        　　return;
+    　　}
+
+    　　items.add(item);
+    　　itemByPos.put(key, item); 
     }
 
     // Draw the map
@@ -123,11 +131,13 @@ public class MapGameController implements Initializable {
         int x = chara.getPosX();
         int y = chara.getPosY();
 
-        GameItem item = itemByPos.get(posKey(x,y));
-        if(item == null || item.isPicked())
+        String key = posKey(x, y);
+        GameItem item = itemByPos.get(key);
+        if(item == null) return;
             return;
         item.applyEffect(gameCtx);
-        itemByPos.remove(item.posKey());
+        itemByPos.remove(key);
+        items.remove(item);
     }
 
     private void moveWithSpeed(int dx,int dy){
@@ -167,7 +177,33 @@ public class MapGameController implements Initializable {
         }
     }
 
+    private void stopAllTimersAndAnimations() {
+    // 1. メインタイマーを止める
+        if (timer != null) {
+            timer.stop();
+            timer = null;
+        }
+
+        // 2. キャラクターアニメーションを止める
+        if (chara != null) {
+            for (int i = 0; i < 4; i++) {
+                chara.getCharaImageAnimation(i).stop(); // ※MoveCharaにgetCharaImageAnimationを作る
+            }
+        }
+
+        // 3. アイテムのスピードブーストタイマーを止める
+        if (gameCtx != null && gameCtx.speedBoostTimeline != null) {
+            gameCtx.speedBoostTimeline.stop();
+            gameCtx.speedBoostTimeline = null;
+            gameCtx.speedMultiplier = 1;
+            if (speedLabel != null)
+                speedLabel.setVisible(false);
+        }
+    }
+
     private void onGameClear(){
+        stopAllTimersAndAnimations();
+        
         try{
             if(timer != null)
                 timer.stop();
@@ -187,6 +223,8 @@ public class MapGameController implements Initializable {
     }
 
     private void onGameOver(){
+        stopAllTimersAndAnimations();
+        
         try{
             if(gameCtx != null && gameCtx.speedBoostTimeline != null){
                 gameCtx.speedBoostTimeline.stop();
@@ -353,6 +391,8 @@ public class MapGameController implements Initializable {
     }
 
     private void onTimeUp(){
+        stopAllTimersAndAnimations();
+        
         try {
             System.out.println("Time Over");
             if(gameCtx != null && gameCtx.speedBoostTimeline !=null){
