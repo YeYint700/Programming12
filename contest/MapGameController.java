@@ -355,7 +355,7 @@ public class MapGameController implements Initializable {
          StageDB.getMainStage().show();
     }
 
-　  @FXML
+    @FXML
     public void func3ButtonAction(ActionEvent event) {
         System.out.println("func3: Nothing to do");
     }

@@ -166,23 +166,23 @@ public class MapData {
     }
 
     public boolean isEnterable(int x, int y) {
-   　　 int type = getMap(x, y);
+        int type = getMap(x, y);
 
-    　　switch (type) {
-        　　case TYPE_SPACE:
-            　　return true;
+        switch (type) {
+            case TYPE_SPACE:
+                return true;
 
-        　　case TYPE_DOOR:
-            　　// ドアは「入れる」けど、開けるかどうかは別処理
-            　　return true;
-
-        　　case TYPE_WALL:
-        　　default:
-           　　 return false;
-    　　}
-　　}
+            case TYPE_DOOR:
+                // ドアは「入れる」けど、開けるかどうかは別処理
+                return true;
+            case TYPE_WALL:
+            default:
+                return false;
+        }
+    }
     public void setGoal(int x, int y){
         goalX = x;
         goalY = y;
         maps[y][x] = TYPE_DOOR; // ゴールをドア扱いにする
+    }
 }

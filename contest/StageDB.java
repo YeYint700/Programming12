@@ -105,8 +105,12 @@ class StageDB {
         }
         return gameClearStage;
     }
-   
-}
-    
 
+    public static void resetMainStage() {
+        if(mainStage != null) {
+            mainStage.close();
+            mainStage = null;
+        }
+    }
+}
     
