@@ -47,6 +47,9 @@ public class MapGameController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //得点のリセット
+        ScoreManager.resetScore();
+        
         // 1) map + chara
         mapData = new MapData(21, 15);
         chara = new MoveChara(1, 1, mapData);
@@ -177,6 +180,7 @@ public class MapGameController implements Initializable {
         item.applyEffect(gameCtx);
         itemByPos.remove(key);
         items.remove(item);
+        ScoreManager.ItemCount +=1;
     }
 
     // ===== Draw =====
@@ -277,6 +281,8 @@ public class MapGameController implements Initializable {
     private void onGameClear() {
         stopAllTimers();
         try {
+            ScoreManager.totalScore(remainingSeconds, ScoreManager.ItemCount);
+            
             StageDB.getMainStage().hide();
             StageDB.getMainSound().stop();
             StageDB.getGameClearStage().show();

@@ -15,6 +15,10 @@
     <Label text="GAME CLEAR!"
            style="-fx-font-size: 36px; -fx-font-weight: bold;" />
 
+    <Label fx:id="scoreLabel"
+           text="Score: 0"
+           style="-fx-font-size: 12px; -fx-font-weight: normal;" />
+
     <Button text="Retry"
             onAction="#onRetry"
             prefWidth="200"/>
