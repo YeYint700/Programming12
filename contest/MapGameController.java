@@ -129,7 +129,6 @@ public class MapGameController implements Initializable {
         int x = item.getX();
         int y = item.getY();
 
-        // MapData に isEnterable がある前提（あなたのコードで既に使用している）
         if (!mapData.isEnterable(x, y) || itemByPos.containsKey(posKey(x, y))) {
             placeItemRandomly(item);
             return;
@@ -161,7 +160,6 @@ public class MapGameController implements Initializable {
         int x = Integer.parseInt(key.split("_")[0]);
         int y = Integer.parseInt(key.split("_")[1]);
 
-        // ★ setPos しない。新しいGameItemを作る
         GameItem newItem = new GameItem(x, y, item.getType());
 
         items.add(newItem);
@@ -204,7 +202,7 @@ public class MapGameController implements Initializable {
                     cell.getChildren().add(item.getImageView());
                 }
 
-                // ★ キャラも cell に入れる（これでアイテムと重ねられる）
+                //キャラをcelに入れることでアイテムと重ねて表示可能に
                 if (x == cx && y == cy) {
                     cell.getChildren().add(c.getCharaImageView());
                 }
