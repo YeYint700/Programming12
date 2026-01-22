@@ -93,6 +93,12 @@ public class GameItem {
         //取得後にアイテムは非表示
         picked = true;
     }
+     // 鍵を持っているかをチェックする静的メソッド
+    public static boolean hasKey(GameContext ctx) {
+        return ctx != null && ctx.hasKey;
+    }
+
+    
 
     //Speedbooster:10病患　移動スピード　２倍
     //重複した場合は残り時間をリセット
@@ -171,4 +177,5 @@ public class GameItem {
             return false;
         }
     }
+
 }
