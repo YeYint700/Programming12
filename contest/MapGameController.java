@@ -281,7 +281,7 @@ public class MapGameController implements Initializable {
         
         // ゴール時のスコア加算
         ScoreManager.totalScore(remainingSeconds, ScoreManager.ItemCount);
-        ScoreManager.Score += 1000; // ゴールボーナス
+        ScoreManager.addScore(1000); // ゴールボーナス
         
         try {
             StageDB.getMainStage().hide();
