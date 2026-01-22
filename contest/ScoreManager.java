@@ -1,5 +1,5 @@
 public class ScoreManager {
-    public static int Score = 0;
+    private static int Score = 0;
     public static int ItemCount = 0;
 
     public static int getScore() {
