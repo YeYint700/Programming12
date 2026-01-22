@@ -248,6 +248,18 @@ public class MapGameController implements Initializable {
         int x = chara.getPosX();
         int y = chara.getPosY();
 
+        // ドアに到達している場合、鍵が必要
+        if (mapData.isDoor(x, y)) {
+            boolean hasKey = GameItem.hasKey(gameCtx); // 鍵を持っているか確認
+            if (!hasKey) {
+                System.out.println("鍵がないのでゴールできません！");
+                return; // 鍵がなければゴール不可
+            }
+            // 鍵を消費してドアを開ける
+            GameItem.tryUseKey(gameCtx);
+        }
+
+        // 鍵を持ってドアを開けた場合はゴール
         if (x == mapData.getGoalX() && y == mapData.getGoalY()) {
             onGameClear();
         }
