@@ -14,8 +14,8 @@ public class ScoreManager {
         int itemScore= itemCount * 500;
     }
     //合計得点
-    public static void totalScore(int remainingSeconds, int itemCount) {
-        Score = (remainingSeconds * 1000) + (itemCount * 500);
+    public static void totalScore(int itemScore, int timeScore) {
+        Score = timeScore + itemScore;
     }
     //得点のリセット
     public static void resetScore() {
