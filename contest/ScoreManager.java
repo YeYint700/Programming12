@@ -6,7 +6,7 @@ public class ScoreManager {
         return Score;
     }
      public static void addScore(int s) {
-        score += s;  
+        Score += s;  
     }
     
     //合計得点
