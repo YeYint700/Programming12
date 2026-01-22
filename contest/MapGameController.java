@@ -278,9 +278,12 @@ public class MapGameController implements Initializable {
 
     private void onGameClear() {
         stopAllTimers();
+        
+        // ゴール時のスコア加算
+        ScoreManager.totalScore(remainingSeconds, ScoreManager.ItemCount);
+        ScoreManager.Score += 1000; // ゴールボーナス
+        
         try {
-            ScoreManager.totalScore(remainingSeconds, ScoreManager.ItemCount);
-            
             StageDB.getMainStage().hide();
             StageDB.getMainSound().stop();
             StageDB.getGameClearStage().show();
@@ -433,6 +436,8 @@ public class MapGameController implements Initializable {
 
     private void onTimeUp() {
         System.out.println("Time Over");
+         // タイムアップならスコアを0に
+        ScoreManager.resetScore(); 
         onGameOver();
     }
 
