@@ -5,6 +5,9 @@ public class ScoreManager {
     public static int getScore() {
         return Score;
     }
+     public static void addScore(int s) {
+        score += s;  
+    }
     
     //合計得点
     public static void totalScore(int remainingSeconds, int itemCount) {
